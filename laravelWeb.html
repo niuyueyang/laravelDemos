@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<img src="" id="img"  onclick="this.src='http://127.0.0.1/laravel55/public/captcha/1'+Math.random()"/>
+		<input type="text" id="name" />
+		<input type="password" id="pwd" />
+		<input type="text" id="code" />
+		<button id="btn" onclick="add()">添加</button>
+		<script type="text/javascript" src="jquery-3.2.1.min.js" ></script>
+		<script>
+			$("#img").attr('src','http://127.0.0.1/laravel55/public/captcha/1');
+			$.ajax({
+					type:"post",
+					url:"http://127.0.0.1/laravel55/public/captcha/1",
+					async:true,
+					contentType:"image/jpeg",
+					data:{
+					},
+					success:function(data){},
+					error:function(err){
+						console.log(err)
+					}
+				});
+			function add(){
+				var name=$("#name").val();
+				var pwd=$("#pwd").val();
+				$.ajax({
+					type:"post",
+					url:"http://127.0.0.1/laravel55/public/verifyCaptcha",
+					async:true,
+					data:{
+						name:name,
+						pwd:pwd,
+						id:1,
+						page:2,
+						limit:2,
+						captcha:($("#code").val()).toLowerCase()
+					},
+					success:function(data){
+						console.log(data)
+					},
+					error:function(err){
+						console.log(err)
+					}
+				});
+			}
+		</script>
+	</body>
+</html>
