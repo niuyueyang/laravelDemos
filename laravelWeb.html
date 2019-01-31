@@ -12,6 +12,7 @@
 		<button id="btn" onclick="add()">添加</button>
 		<script type="text/javascript" src="jquery-3.2.1.min.js" ></script>
 		<script>
+			//验证码【包括下面两段代码，刷新在img onclick上面】
 			$("#img").attr('src','http://127.0.0.1/laravel55/public/captcha/1');
 			$.ajax({
 					type:"post",
@@ -25,6 +26,8 @@
 						console.log(err)
 					}
 				});
+				
+			//测试ajax
 			function add(){
 				var name=$("#name").val();
 				var pwd=$("#pwd").val();
