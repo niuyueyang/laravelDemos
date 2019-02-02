@@ -14,6 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Gregwar\Captcha\CaptchaBuilder;
 use Gregwar\Captcha\PhraseBuilder;
+use Illuminate\Support\Facades\Mail;
 use Session;
 use Cache;
 
@@ -147,6 +148,42 @@ class HomeController extends Controller
             //用户输入验证码错误
             return response()->json(['status' => 'error','code' => 1,'message' => '验证码错误','data'=>Cache::get('milkcaptcha')]);
         }
+    }
+
+    //邮件
+    public function Mail(){
+        Mail::raw('你好！',function($message)
+        {
+            $to = '255153187@qq.com';
+            $message ->to($to)->subject('测试邮件');
+        });
+        if(count(Mail::failures()) < 1){
+            echo '发送邮件成功，请查收！';
+        }else{
+            echo '发送邮件失败，请重试！';
+        }
+    }
+
+    //激活邮件
+    public function active(){
+        $uid = 1;      //获取最新插入的id
+        $activationcode = md5(time());  //获取邮箱验证时的随机串
+        $data = array('email'=>'255153187@qq.com', 'name'=>'admin', 'uid'=>$uid, 'activationcode'=>$activationcode);
+        Mail::send('activemail', $data, function($message){
+            $email='255153187@qq.com';
+            $name='admin';
+            $message ->to($email,$name)->subject('欢迎注册测试账号');
+        });
+        if(count(Mail::failures()) < 1){
+            echo '发送邮件成功，请查收！';
+        }else{
+            echo '发送邮件失败，请重试！';
+        }
+    }
+
+    //邮件激活
+    public function mailBox(){
+        var_dump(Request::route('activationcode'));
     }
 
 }

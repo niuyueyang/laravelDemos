@@ -21,3 +21,6 @@ Route::any('/del',['uses'=>'HomeController@del']);
 Route::any('/page',['uses'=>'HomeController@page']);
 Route::any('/captcha/{tmp}',['uses'=>'HomeController@captcha']);
 Route::any('/verifyCaptcha',['uses'=>'HomeController@verifyCaptcha']);
+Route::any('/mail',['uses'=>'HomeController@Mail']);
+Route::any('/active',['uses'=>'HomeController@active']);
+Route::any('/mailBox/{uid}/{activationcode}',['uses'=>'HomeController@mailBox']);
